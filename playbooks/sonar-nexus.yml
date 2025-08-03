@@ -24,7 +24,7 @@
     - name: download nexus binaries
       ansible.builtin.get_url:
         url: https://download.sonatype.com/nexus/3/nexus-3.82.0-08-linux-x86_64.tar.gz
-        path: /opt/
+        dest: /opt/
       register: nexus_download
 
     - name: unarchive nexus_binaries
