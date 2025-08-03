@@ -2,7 +2,7 @@
 - name: prepare base foundation
   hosts: sonar-nexus
   tasks:
-    - name: update, upgrade, install [ java , net-tools , unzip , docker.io ]
+    - name: install tools
       apt:
         name: 
           - openjd-17-jre-headless
