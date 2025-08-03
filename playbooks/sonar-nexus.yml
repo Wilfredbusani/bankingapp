@@ -1,4 +1,3 @@
----
 - name: prepare base foundation
   hosts: sonar-nexus
   tasks:
@@ -9,8 +8,7 @@
           - net-tools
           - unzip
           - docker.io
-      become: true
-      update_cache: yes
+      
     
     - name: create a jenkins user 
       ansible.builtin.user:
