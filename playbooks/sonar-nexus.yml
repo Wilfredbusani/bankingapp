@@ -9,9 +9,8 @@
           - net-tools
           - unzip
           - docker.io
-        become: yes
-        update_cache: yes
-        upgrade: yes
+      become: true
+      update_cache: yes
     
     - name: create a jenkins user 
       ansible.builtin.user:
