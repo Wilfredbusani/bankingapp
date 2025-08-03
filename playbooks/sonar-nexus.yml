@@ -42,7 +42,7 @@
       register: found_directory
 
     - name: rename nexus_binary_directory
-      ansible.builtin.command: mv "{{found_directory.files[0].path}}" nexus3
+      ansible.builtin.command: mv "{{found_directory.files[0].path}}" /opt/nexus3
 
     - name: final echo
       ansible.builtin.command: echo "finished."
