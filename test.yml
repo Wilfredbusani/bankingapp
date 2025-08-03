@@ -1,6 +1,0 @@
-- name: Test connectivity
-  hosts: sonar-nexus
-  tasks:
-    - name: ping
-      ansible.built.ping:
-        
