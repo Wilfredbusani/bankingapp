@@ -1,5 +1,6 @@
 - name: prepare base foundation
   hosts: sonar-nexus
+  become: true
   tasks:
     - name: install tools
       apt:
