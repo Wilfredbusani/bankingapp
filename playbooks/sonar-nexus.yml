@@ -31,6 +31,7 @@
       ansible.builtin.unarchive:
         src: "{{nexus_download.dest}}"
         dest: /opt
+        remote_src: yes
       register: nexus_binary_directory
 
     - name: find nexus nexus_binary_directory
