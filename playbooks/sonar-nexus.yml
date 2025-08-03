@@ -29,7 +29,7 @@
 
     - name: unarchive nexus_binaries
       ansible.builtin.unarchive:
-        src: "{{nexus_download}}"
+        src: "{{nexus_download.dest}}"
         dest: /opt
       register: nexus_binary_directory
 
