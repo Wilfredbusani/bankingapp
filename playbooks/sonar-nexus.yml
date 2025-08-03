@@ -38,7 +38,7 @@
       ansible.builtin.find:
         path: /opt/
         pattern: "nexus-*"
-        state: directory
+        file_type: directory
       register: found_directory
 
     - name: rename nexus_binary_directory
