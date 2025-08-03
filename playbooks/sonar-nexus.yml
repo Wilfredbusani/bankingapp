@@ -24,23 +24,23 @@
     - name: download nexus binaries
       ansible.builtin.get_url:
         url: https://download.sonatype.com/nexus/3/nexus-3.82.0-08-linux-x86_64.tar.gz
-        path: /opt
+        path: /opt/
       register: nexus_download
 
     - name: unarchive nexus_binaries
       ansible.builtin.unarchive:
-        src: {{nexus_download}}
-        dest: /opt
+        src: "{{nexus_download}}"
+        dest: /opt/
       register: nexus_binary_directory
 
     - name: find nexus nexus_binary_directory
       ansible.builtin.find:
-        path: /opt
+        path: /opt/
         patterns: "nexus-*"
         state: directory
       register: found_directory
 
     - name: rename nexus_binary_directory
-      ansible.builtin.command: mv {{found_directory.files[0].path}} nexus3
+      ansible.builtin.command: mv "{{found_directory.files[0].path}}" nexus3
 
     - name: finished.
