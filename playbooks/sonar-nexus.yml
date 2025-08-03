@@ -3,7 +3,7 @@
   hosts: sonar-nexus
   tasks:
     - name: update, upgrade, install [ java , net-tools , unzip , docker.io ]
-      ansiblebtuilin.apt:
+      apt:
         name: 
           - openjd-17-jre-headless
           - net-tools
