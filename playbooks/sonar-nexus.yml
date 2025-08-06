@@ -21,17 +21,11 @@
     - name: run sonraqube container
       ansible.builtin.command: sudo docker run -d -p 9000:9000 sonarqube:lts-community
 
-    - name: if nexus tar already exists
-      ansible.builtin.stat:
-        path: /opt/nexus-3.82.0-08-linux-aarch_64.tar.gz
-      register: nexus_tar
-
     - name: download nexus binaries
       ansible.builtin.get_url:
         url: https://download.sonatype.com/nexus/3/nexus-3.82.0-08-linux-aarch_64.tar.gz
         dest: /opt
       register: nexus_download
-      when: not neuxs_tar.stat.exists
 
     - name: unarchive nexus_binaries
       ansible.builtin.unarchive:
