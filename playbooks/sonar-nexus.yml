@@ -94,3 +94,10 @@
         mode: '0644'
       notify: Reload systemd and restart nexus
 
+handlers:
+  - name: Reload systemd and restart nexus
+    ansible.builtin.service:
+      name: nexus
+      state: started
+      enabled: yes
+      daemon_reload: yes
