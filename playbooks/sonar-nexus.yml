@@ -48,7 +48,7 @@
       register: found_directory
 
     - name: check if nexus directory exists
-      ansicd ..ble.builtin.stat:
+      ansible.builtin.stat:
         path: /opt/nexus3
       register: nexus_directory_available
 
