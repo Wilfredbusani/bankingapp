@@ -68,6 +68,7 @@
         group: nexus
         state: directory
         recurse: yes
+        mode: 0755
 
     - name: sonartype-work
       ansible.builtin.file:
@@ -76,17 +77,20 @@
         group: nexus
         recurse: yes
 
+    - name: Create symbolic link for Nexus
+      ansible.builtin.file:
+        src: /opt/nexus
+        dest: opt/nexus/latest
+        state: link
+        owner: nexus
+        group: nexus
 
-- name: run_as_nexus
-  hosts: sonar-nexus
-  become: true
-  become_user: nexus
-  tasks:
-    - name: make nexus user runnable
-      ansible.builtin.lineinfile:
-        path: /opt/nexus/bin/nexus.rc
-        regex: '^#run_as_user=""'
-        line: 'run_as_user="nexus"'
+    - name: copy nexus service file
+      ansible.builtin.template:
+        src: nexus.service.j2
+        dest: /etc/systemd/system/nexus.service
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload systemd and restart nexus
 
-    - name: start nexus
-      ansible.builtin.command: /opt/nexus/bin/nexus start
