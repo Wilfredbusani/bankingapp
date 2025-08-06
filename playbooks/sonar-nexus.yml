@@ -93,6 +93,8 @@
 
   handlers:
     - name: Reload systemd and restart nexus
+      become: true
+      become_user: nexus
       ansible.builtin.service:
         name: nexus
         state: started
