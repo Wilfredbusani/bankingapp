@@ -41,8 +41,52 @@
         file_type: directory
       register: found_directory
 
+    - name: check if nexus directory exists
+      ansinble.builtin.stat:
+        path: /opt/nexus3
+      register: nexus_directory_available
+
     - name: rename nexus_binary_directory
       ansible.builtin.command: mv "{{found_directory.files[0].path}}" /opt/nexus3
+      when: not nexus_directory_available.stat.exists
 
-    - name: final echo
-      ansible.builtin.command: echo "finished."
+    - name: add group nexus
+      ansible.builtin.group:
+        name: nexus
+        state: present
+
+    - name: add user nexus
+      ansible.builtin.user:
+        name: nexus
+        group: nexus
+        state: present
+
+    - name: make nexus owner of nexus3 directory
+      ansible.builtin.file:
+        path: /opt/nexus3
+        owner: nexus
+        group: nexus
+        state: directory
+        recurse: yes
+
+    - name: sonartype-work
+      ansible.builtin.file:
+        path: sonartype-work
+        owner: nexus
+        group: nexus
+        recurse: yes
+
+
+- name: run_as_nexus
+  hosts: sonar-nexus
+  become: true
+  become_user: nexus
+  tasks:
+    - name: make nexus user runnable
+      ansible.builtin.lineinfile:
+        path: /opt/nexus3/bin/nexus.rc
+        regex: '^#run_as_user=""'
+        line: 'run_as_user="nexus"'
+
+    - name: start nexus
+      ansible.builtin.command: /opt/nexus3/bin/nexus start
