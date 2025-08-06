@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=/opt/nexus/latest/bin/nexus start
-ExecStop=/opt/nexus/latest/bin/nexus stop
+ExecStart=/usr/bin/nexus start
+ExecStop=/usr/bin/nexus stop
 User=nexus
 Group=nexus
 LimitNOFILE=65536
