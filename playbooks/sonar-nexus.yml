@@ -61,14 +61,13 @@
         group: nexus
         state: present
 
-    - name: make nexus owner of nexus3 directory
+    - name: make nexus owner of nexus directory
       ansible.builtin.file:
         path: /opt/nexus
         owner: nexus
         group: nexus
         state: directory
         recurse: yes
-        mode: 0755
 
     - name: sonartype-work
       ansible.builtin.file:
