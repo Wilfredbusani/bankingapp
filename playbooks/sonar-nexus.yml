@@ -43,7 +43,7 @@
 
     - name: check if nexus directory exists
       ansible.builtin.stat:
-        path: /opt/nexus3
+        path: /opt/nexus
       register: nexus_directory_available
 
     - name: rename nexus_binary_directory
