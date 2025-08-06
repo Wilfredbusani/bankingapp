@@ -47,7 +47,7 @@
       register: nexus_directory_available
 
     - name: rename nexus_binary_directory
-      ansible.builtin.command: mv "{{found_directory.files[0].path}}" /opt/nexus3
+      ansible.builtin.command: mv "{{found_directory.files[0].path}}" /opt/nexus
       when: not nexus_directory_available.stat.exists
 
     - name: add group nexus
@@ -63,7 +63,7 @@
 
     - name: make nexus owner of nexus3 directory
       ansible.builtin.file:
-        path: /opt/nexus3
+        path: /opt/nexus
         owner: nexus
         group: nexus
         state: directory
@@ -84,9 +84,9 @@
   tasks:
     - name: make nexus user runnable
       ansible.builtin.lineinfile:
-        path: /opt/nexus3/bin/nexus.rc
+        path: /opt/nexus/bin/nexus.rc
         regex: '^#run_as_user=""'
         line: 'run_as_user="nexus"'
 
     - name: start nexus
-      ansible.builtin.command: /opt/nexus3/bin/nexus start
+      ansible.builtin.command: /opt/nexus/bin/nexus start
