@@ -23,7 +23,7 @@
 
     - name: if nexus tar already exists
       ansible.builtin.stat:
-        path: /opt/*.tar.gz
+        path: /opt/nexus-3.82.0-08-linux-aarch_64.tar.gz
       register: nexus_tar
 
     - name: download nexus binaries
