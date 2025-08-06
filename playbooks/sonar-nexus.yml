@@ -76,8 +76,8 @@
         group: nexus
         recurse: yes
 
-    - name: Create symbolic link for Nexus
-      ansible.builtin.command: ln -s ./nexus /usr/bin
+    #- name: Create symbolic link for Nexus
+     # ansible.builtin.command: ln -s ./nexus /usr/bin
 
         
         
