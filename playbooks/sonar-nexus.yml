@@ -79,7 +79,7 @@
 
     - name: Create symbolic link for Nexus
       ansible.builtin.file:
-        src: /opt/nexus
+        src: /opt/nexus/
         dest: opt/nexus/latest
         state: link
         owner: nexus
