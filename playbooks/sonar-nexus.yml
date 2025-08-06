@@ -89,9 +89,7 @@
         owner: root
         group: root
         mode: '0644'
-      notify: Reload systemd and restart nexus
 
-  handlers:
     - name: Reload systemd and restart nexus
       become: true
       become_user: nexus
