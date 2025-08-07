@@ -18,83 +18,10 @@
         state: present
         group: docker
 
-   # - name: run sonraqube container
-    #  ansible.builtin.command: sudo docker run -d -p 9000:9000 sonarqube:lts-community
+    - name: run sonraqube container
+      ansible.builtin.command: sudo docker run -d -p 9000:9000 sonarqube:lts-community
 
-    - name: download nexus binaries
-      ansible.builtin.get_url:
-        url: https://download.sonatype.com/nexus/3/nexus-3.82.0-08-linux-x86_64.tar.gz
-        dest: /opt
-      register: nexus_download
-
-    - name: unarchive nexus_binaries
-      ansible.builtin.unarchive:
-        src: "{{nexus_download.dest}}"
-        dest: /opt
-        remote_src: yes
-      register: nexus_binary_directory
-
-    - name: find nexus nexus_binary_directory
-      ansible.builtin.find:
-        path: /opt/
-        pattern: "nexus-*"
-        file_type: directory
-      register: found_directory
-
-    - name: check if nexus directory exists
-      ansible.builtin.stat:
-        path: /opt/nexus
-      register: nexus_directory_available
-
-    - name: rename nexus_binary_directory
-      ansible.builtin.command: mv "{{found_directory.files[0].path}}" /opt/nexus
-      when: not nexus_directory_available.stat.exists
-
-    - name: add group nexus
-      ansible.builtin.group:
-        name: nexus
-        state: present
-
-    - name: add user nexus
-      ansible.builtin.user:
-        name: nexus
-        group: nexus
-        state: present
-
-    - name: make nexus owner of nexus directory
-      ansible.builtin.file:
-        path: /opt/nexus
-        owner: nexus
-        group: nexus
-        state: directory
-        recurse: yes
-
-    - name: sonartype-work
-      ansible.builtin.file:
-        path: sonartype-work
-        owner: nexus
-        group: nexus
-        recurse: yes
-
-    #- name: Create symbolic link for Nexus
-     # ansible.builtin.command: ln -s ./nexus /usr/bin
-
-        
-        
-
-    - name: copy nexus service file
-      ansible.builtin.template:
-        src: nexus.service.j2
-        dest: /etc/systemd/system/nexus.service
-        owner: root
-        group: root
-        mode: '0644'
-
-    - name: Reload systemd and restart nexus
-      become: true
-      become_user: root
-      ansible.builtin.service:
-        name: nexus
-        state: started
-        enabled: yes
-        daemon_reload: yes
+    - name: run nexus container
+      ansible.builtin.command: sudo docker run -d -p 8081:8081 sonatype/nexus3
+    - name: status
+      ansible.builtin.command: echo "done."
